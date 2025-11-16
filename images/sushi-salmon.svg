@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <!-- サーモン寿司 -->
+  <!-- シャリ（酢飯） -->
+  <ellipse cx="60" cy="45" rx="45" ry="12" fill="#F5F5DC" stroke="#E8E8D0" stroke-width="1"/>
+  <ellipse cx="60" cy="42" rx="45" ry="10" fill="#FFFEF0"/>
+
+  <!-- ネタ（サーモン） -->
+  <ellipse cx="60" cy="28" rx="48" ry="14" fill="#E9967A" opacity="0.9"/>
+  <ellipse cx="60" cy="25" rx="48" ry="12" fill="#FFA07A"/>
+
+  <!-- ハイライト -->
+  <ellipse cx="45" cy="22" rx="18" ry="6" fill="#FFB6A3" opacity="0.6"/>
+
+  <!-- 脂身の模様 -->
+  <path d="M 25 25 Q 30 27 35 25" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M 50 23 Q 55 25 60 23" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M 75 25 Q 80 27 85 25" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.4"/>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <!-- たこ寿司 -->
+  <!-- シャリ（酢飯） -->
+  <ellipse cx="60" cy="45" rx="45" ry="12" fill="#F5F5DC" stroke="#E8E8D0" stroke-width="1"/>
+  <ellipse cx="60" cy="42" rx="45" ry="10" fill="#FFFEF0"/>
+
+  <!-- ネタ（たこ） -->
+  <ellipse cx="60" cy="28" rx="48" ry="14" fill="#C41E3A" opacity="0.7"/>
+  <ellipse cx="60" cy="25" rx="48" ry="12" fill="#E75480"/>
+
+  <!-- 吸盤 -->
+  <circle cx="35" cy="24" r="3" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="35" cy="24" r="2" fill="#FFB6C1" opacity="0.5"/>
+
+  <circle cx="50" cy="26" r="3" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="50" cy="26" r="2" fill="#FFB6C1" opacity="0.5"/>
+
+  <circle cx="65" cy="24" r="3" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="65" cy="24" r="2" fill="#FFB6C1" opacity="0.5"/>
+
+  <circle cx="80" cy="26" r="3" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="80" cy="26" r="2" fill="#FFB6C1" opacity="0.5"/>
+
+  <!-- ハイライト -->
+  <ellipse cx="45" cy="22" rx="18" ry="5" fill="#FFB6C1" opacity="0.6"/>
+</svg>

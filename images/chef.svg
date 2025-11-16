@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="200" height="250">
+  <!-- 板前さん -->
+
+  <!-- 体（白い調理服） -->
+  <rect x="60" y="140" width="80" height="100" rx="5" fill="#FFFFFF"/>
+  <rect x="50" y="140" width="100" height="20" rx="5" fill="#F5F5F5"/>
+
+  <!-- 襟 -->
+  <path d="M 60 140 L 75 160 L 100 145 L 125 160 L 140 140" stroke="#E0E0E0" stroke-width="2" fill="none"/>
+
+  <!-- 首 -->
+  <rect x="85" y="110" width="30" height="35" rx="3" fill="#FFD4A3"/>
+
+  <!-- 顔 -->
+  <ellipse cx="100" cy="90" rx="35" ry="40" fill="#FFE4C4"/>
+
+  <!-- 目 -->
+  <circle cx="88" cy="85" r="3" fill="#2F2F2F"/>
+  <circle cx="112" cy="85" r="3" fill="#2F2F2F"/>
+
+  <!-- 眉毛 -->
+  <path d="M 80 75 Q 88 73 95 75" stroke="#2F2F2F" stroke-width="2" fill="none"/>
+  <path d="M 105 75 Q 112 73 120 75" stroke="#2F2F2F" stroke-width="2" fill="none"/>
+
+  <!-- 口（笑顔） -->
+  <path d="M 85 105 Q 100 112 115 105" stroke="#2F2F2F" stroke-width="2" fill="none"/>
+
+  <!-- 鉢巻き -->
+  <rect x="65" y="60" width="70" height="12" rx="2" fill="#FFFFFF"/>
+  <path d="M 135 66 L 155 66 L 150 72 L 145 66" fill="#FFFFFF"/>
+
+  <!-- 腕（右） -->
+  <ellipse cx="50" cy="180" rx="12" ry="40" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="220" rx="10" ry="15" fill="#FFD4A3"/>
+
+  <!-- 腕（左） -->
+  <ellipse cx="150" cy="180" rx="12" ry="40" fill="#FFFFFF"/>
+  <ellipse cx="150" cy="220" rx="10" ry="15" fill="#FFD4A3"/>
+</svg>

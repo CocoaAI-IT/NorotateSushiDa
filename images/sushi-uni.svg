@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <!-- うに軍艦巻き -->
+  <!-- シャリ（酢飯） -->
+  <ellipse cx="60" cy="45" rx="45" ry="12" fill="#F5F5DC" stroke="#E8E8D0" stroke-width="1"/>
+  <ellipse cx="60" cy="42" rx="45" ry="10" fill="#FFFEF0"/>
+
+  <!-- 海苔（帯） -->
+  <rect x="20" y="28" width="80" height="14" fill="#1A1A1A"/>
+  <rect x="20" y="28" width="80" height="12" fill="#2F2F2F"/>
+
+  <!-- うに（ベース） -->
+  <ellipse cx="60" cy="20" rx="35" ry="10" fill="#CC8800"/>
+  <ellipse cx="60" cy="18" rx="35" ry="8" fill="#FFB347"/>
+
+  <!-- うにの質感（凹凸） -->
+  <path d="M 30 18 Q 35 15 40 18 Q 45 21 50 18 Q 55 15 60 18 Q 65 21 70 18 Q 75 15 80 18 Q 85 21 90 18"
+        stroke="#FFA500" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M 32 20 Q 37 17 42 20 Q 47 23 52 20 Q 57 17 62 20 Q 67 23 72 20 Q 77 17 82 20 Q 87 23 92 20"
+        stroke="#FFD700" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- ハイライト -->
+  <ellipse cx="50" cy="16" rx="12" ry="4" fill="#FFD700" opacity="0.5"/>
+</svg>

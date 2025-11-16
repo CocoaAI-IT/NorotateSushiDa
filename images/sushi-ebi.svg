@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <!-- えび寿司 -->
+  <!-- シャリ（酢飯） -->
+  <ellipse cx="60" cy="45" rx="45" ry="12" fill="#F5F5DC" stroke="#E8E8D0" stroke-width="1"/>
+  <ellipse cx="60" cy="42" rx="45" ry="10" fill="#FFFEF0"/>
+
+  <!-- ネタ（えび） -->
+  <ellipse cx="60" cy="28" rx="48" ry="14" fill="#FFB6C1" opacity="0.8"/>
+  <ellipse cx="60" cy="25" rx="48" ry="12" fill="#FFD6E0"/>
+
+  <!-- えびの筋 -->
+  <path d="M 25 25 L 30 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 35 25 L 40 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 45 25 L 50 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 55 25 L 60 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 65 25 L 70 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 75 25 L 80 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+  <path d="M 85 25 L 90 25" stroke="#FF69B4" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- ハイライト -->
+  <ellipse cx="45" cy="22" rx="15" ry="5" fill="#FFFFFF" opacity="0.7"/>
+</svg>

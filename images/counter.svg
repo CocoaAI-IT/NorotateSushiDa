@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <!-- カウンター席の背景 -->
+
+  <!-- 壁（濃い色） -->
+  <rect x="0" y="0" width="800" height="250" fill="#2C1810"/>
+
+  <!-- 壁の木目模様 -->
+  <path d="M 50 20 Q 100 40 150 20" stroke="#3A2218" stroke-width="2" fill="none" opacity="0.3"/>
+  <path d="M 200 50 Q 250 70 300 50" stroke="#3A2218" stroke-width="2" fill="none" opacity="0.3"/>
+  <path d="M 350 30 Q 400 50 450 30" stroke="#3A2218" stroke-width="2" fill="none" opacity="0.3"/>
+  <path d="M 500 60 Q 550 80 600 60" stroke="#3A2218" stroke-width="2" fill="none" opacity="0.3"/>
+  <path d="M 650 40 Q 700 60 750 40" stroke="#3A2218" stroke-width="2" fill="none" opacity="0.3"/>
+
+  <!-- カウンター台 -->
+  <rect x="0" y="250" width="800" height="150" fill="#8B6F47"/>
+  <rect x="0" y="250" width="800" height="20" fill="#A0826D"/>
+  <rect x="0" y="250" width="800" height="10" fill="#D4A574"/>
+
+  <!-- カウンターの木目 -->
+  <line x1="0" y1="280" x2="800" y2="280" stroke="#6B5639" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="310" x2="800" y2="310" stroke="#6B5639" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="340" x2="800" y2="340" stroke="#6B5639" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="370" x2="800" y2="370" stroke="#6B5639" stroke-width="1" opacity="0.3"/>
+
+  <!-- カウンターのハイライト -->
+  <rect x="0" y="250" width="800" height="5" fill="#E8D4B0" opacity="0.5"/>
+</svg>

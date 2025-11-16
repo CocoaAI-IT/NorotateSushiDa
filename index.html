@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回らない寿司打 - Typing Game</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div id="app">
+    <!-- スタート画面 -->
+    <div id="start-screen" class="screen active">
+      <div class="title-container">
+        <h1 class="game-title">🍣 回らない寿司打 🍣</h1>
+        <p class="subtitle">高級寿司店でタイピング修行</p>
+      </div>
+
+      <div class="course-selection">
+        <button class="course-btn" data-course="easy">
+          <div class="course-name">お手軽コース</div>
+          <div class="course-price">3,000円</div>
+          <div class="course-time">60秒</div>
+        </button>
+
+        <button class="course-btn" data-course="normal">
+          <div class="course-name">お勧めコース</div>
+          <div class="course-price">5,000円</div>
+          <div class="course-time">90秒</div>
+        </button>
+
+        <button class="course-btn" data-course="hard">
+          <div class="course-name">高級コース</div>
+          <div class="course-price">10,000円</div>
+          <div class="course-time">120秒</div>
+        </button>
+      </div>
+
+      <div class="instructions">
+        <h3>遊び方</h3>
+        <ul>
+          <li>表示された文章をローマ字でタイピングしてください</li>
+          <li>ミスなく連続で打つとボーナスポイントがもらえます</li>
+          <li>時間内にできるだけ多くタイプしてお得を目指しましょう</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ゲーム画面 -->
+    <div id="game-screen" class="screen">
+      <!-- 背景（カウンター席） -->
+      <div class="background-container">
+        <img src="images/counter.svg" alt="カウンター" class="background-image">
+      </div>
+
+      <!-- 板前さん -->
+      <div class="chef-container">
+        <img src="images/chef.svg" alt="板前さん" class="chef-image">
+      </div>
+
+      <!-- ゲーム情報バー -->
+      <div class="game-info-bar">
+        <div class="info-item">
+          <span class="info-label">⏱ 残り:</span>
+          <span id="time-display" class="info-value">0.0秒</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">💰 コース:</span>
+          <span id="course-price-display" class="info-value">0円</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">📊 獲得:</span>
+          <span id="score-display" class="info-value">0円</span>
+        </div>
+      </div>
+
+      <!-- 連続ミスなしバー -->
+      <div class="consecutive-bar-container">
+        <div class="consecutive-label">🔥 連続ミスなし:</div>
+        <div class="consecutive-bar-wrapper">
+          <div id="consecutive-bar" class="consecutive-bar"></div>
+        </div>
+        <div id="consecutive-count" class="consecutive-count">0文字</div>
+      </div>
+
+      <!-- 寿司表示エリア -->
+      <div class="sushi-area">
+        <div class="sushi-container">
+          <img id="sushi-image" src="images/sushi-maguro.svg" alt="寿司" class="sushi-image">
+          <img src="images/plate.svg" alt="お皿" class="plate-image">
+        </div>
+      </div>
+
+      <!-- タイピングエリア -->
+      <div class="typing-area">
+        <div id="phrase-display" class="phrase-display">文章がここに表示されます</div>
+        <div id="romaji-display" class="romaji-display">
+          <span id="romaji-typed" class="romaji-typed"></span><span id="romaji-remaining" class="romaji-remaining">romaji</span>
+        </div>
+      </div>
+
+      <!-- ステータス表示 -->
+      <div class="status-bar">
+        <div class="status-item">
+          <span class="status-label">タイプ数:</span>
+          <span id="typed-count">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">ミス:</span>
+          <span id="miss-count">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">WPM:</span>
+          <span id="wpm-display">0</span>
+        </div>
+      </div>
+
+      <!-- ボーナス通知 -->
+      <div id="bonus-notification" class="bonus-notification"></div>
+    </div>
+
+    <!-- リザルト画面 -->
+    <div id="result-screen" class="screen">
+      <div class="result-container">
+        <h2 class="result-title">お会計</h2>
+
+        <div class="result-main">
+          <div class="result-row">
+            <span class="result-label">お支払い:</span>
+            <span id="result-price" class="result-value">0円</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">獲得ポイント:</span>
+            <span id="result-earned" class="result-value">0円</span>
+          </div>
+          <hr class="result-divider">
+          <div class="result-row profit">
+            <span class="result-label">お得:</span>
+            <span id="result-profit" class="result-value profit-value">0円</span>
+          </div>
+        </div>
+
+        <div class="result-stats">
+          <div class="stat-item">
+            <div class="stat-label">タイプ数</div>
+            <div id="result-typed" class="stat-value">0文字</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ミス</div>
+            <div id="result-miss" class="stat-value">0回</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">正確率</div>
+            <div id="result-accuracy" class="stat-value">0%</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">最大連続</div>
+            <div id="result-consecutive" class="stat-value">0文字</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">WPM</div>
+            <div id="result-wpm" class="stat-value">0</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">ボーナス</div>
+            <div id="result-bonus" class="stat-value">0pt</div>
+          </div>
+        </div>
+
+        <div class="result-buttons">
+          <button id="retry-btn" class="result-btn">もう一度</button>
+          <button id="back-to-menu-btn" class="result-btn">コース選択</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/typing-engine.js"></script>
+  <script src="js/game-logic.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

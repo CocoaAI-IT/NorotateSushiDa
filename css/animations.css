@@ -1,0 +1,299 @@
+/* 回らない寿司打 - アニメーション */
+
+/* フェードイン */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* フェードアウト */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* 寿司がスライドイン */
+@keyframes sushiSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 寿司が食べられる（消える） */
+@keyframes sushiEaten {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(-50px);
+  }
+}
+
+/* ボーナス表示 */
+@keyframes bonusShow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+}
+
+/* パルス（脈動） */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* キラキラエフェクト */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* 連続バーのグラデーションアニメーション */
+@keyframes barGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* シェイク（振動） */
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* カウントアップ */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* アニメーションクラス */
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
+.sushi-slide-in {
+  animation: sushiSlideIn 0.8s ease-out forwards;
+}
+
+.sushi-eaten {
+  animation: sushiEaten 0.5s ease-out forwards;
+}
+
+.bonus-show {
+  animation: bonusShow 2s ease-out forwards;
+}
+
+.pulse {
+  animation: pulse 0.3s ease-out;
+}
+
+.shake {
+  animation: shake 0.5s ease-out;
+}
+
+/* 連続バーのアニメーション */
+.consecutive-bar.active {
+  animation: barGradient 2s ease infinite;
+}
+
+/* タイトルのアニメーション */
+.game-title {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* コースボタンのホバーアニメーション */
+.course-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 結果画面の統計項目 */
+.stat-item {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.stat-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.stat-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.stat-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.stat-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.stat-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.stat-item:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* タイピングエリアの入力時のフィードバック */
+.typing-area.correct {
+  animation: pulse 0.2s ease-out;
+}
+
+.typing-area.incorrect {
+  animation: shake 0.3s ease-out;
+}
+
+/* ローマ字タイプ済み文字の表示 */
+.romaji-typed {
+  transition: all 0.1s ease;
+}
+
+/* 時間警告アニメーション */
+@keyframes timeWarning {
+  0%, 100% {
+    color: #FFD700;
+  }
+  50% {
+    color: #FF6347;
+  }
+}
+
+.time-warning {
+  animation: timeWarning 1s ease-in-out infinite;
+}
+
+/* スコアアップアニメーション */
+@keyframes scoreUp {
+  0% {
+    transform: scale(1);
+    color: #FFD700;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #4CAF50;
+  }
+  100% {
+    transform: scale(1);
+    color: #FFD700;
+  }
+}
+
+.score-up {
+  animation: scoreUp 0.3s ease-out;
+}
+
+/* コンボエフェクト */
+@keyframes comboEffect {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+  }
+}
+
+.combo-effect {
+  animation: comboEffect 0.5s ease-out;
+}
+
+/* ボタンリップル効果 */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <!-- たまご寿司 -->
+  <!-- シャリ（酢飯） -->
+  <ellipse cx="60" cy="45" rx="45" ry="12" fill="#F5F5DC" stroke="#E8E8D0" stroke-width="1"/>
+  <ellipse cx="60" cy="42" rx="45" ry="10" fill="#FFFEF0"/>
+
+  <!-- 海苔 -->
+  <rect x="55" y="32" width="10" height="18" fill="#1A1A1A" rx="1"/>
+
+  <!-- ネタ（たまご） -->
+  <rect x="15" y="18" width="90" height="18" rx="3" fill="#F4C430"/>
+  <rect x="15" y="16" width="90" height="16" rx="3" fill="#FFD700"/>
+
+  <!-- ハイライト -->
+  <rect x="20" y="18" width="30" height="6" rx="2" fill="#FFED4E" opacity="0.6"/>
+
+  <!-- 焼き目 -->
+  <rect x="15" y="16" width="90" height="2" rx="1" fill="#DDA520" opacity="0.3"/>
+  <rect x="15" y="30" width="90" height="2" rx="1" fill="#DDA520" opacity="0.3"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 20" width="140" height="20">
+  <!-- お皿 -->
+  <ellipse cx="70" cy="15" rx="65" ry="5" fill="#333333" opacity="0.2"/>
+  <ellipse cx="70" cy="12" rx="65" ry="5" fill="#E8E8E8"/>
+  <ellipse cx="70" cy="10" rx="65" ry="5" fill="#FFFFFF"/>
+  <ellipse cx="70" cy="10" rx="60" ry="4" fill="#F8F8F8"/>
+</svg>
