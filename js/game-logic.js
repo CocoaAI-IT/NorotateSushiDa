@@ -21,6 +21,7 @@ class GameLogic {
     this.startTime = null;
     this.bonusThresholds = [10, 20, 30, 50, 75, 100, 150, 200, 300];
     this.bonusPoints = 0;
+    this.gaugeThreshold = 50; // ゲージ満タンの閾値
   }
 
   /**
@@ -169,6 +170,12 @@ class GameLogic {
           result.bonus = bonus;
         }
 
+        // ゲージ満タンチェック（50文字ごと）
+        if (this.consecutiveCorrect > 0 && this.consecutiveCorrect % this.gaugeThreshold === 0) {
+          result.gaugeFull = true;
+          // 連続カウントはリセットせずに継続（次の50文字へ）
+        }
+
         // フレーズ完成チェック
         if (this.currentPosition >= this.currentPattern.length) {
           result.completed = true;
@@ -188,6 +195,14 @@ class GameLogic {
     }
 
     return result;
+  }
+
+  /**
+   * 時間を追加
+   * @param {number} seconds - 追加する秒数
+   */
+  addTime(seconds) {
+    this.timeRemaining += seconds;
   }
 
   /**

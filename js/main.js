@@ -156,9 +156,14 @@ class SushiTypingGame {
       this.updateDisplay();
       this.animateTypingArea('correct');
 
-      // ボーナス表示
+      // ボーナス（音だけ）
       if (result.bonus) {
-        this.showBonus(result.bonus);
+        this.playSound('combo');
+      }
+
+      // ゲージ満タン時の処理
+      if (result.gaugeFull) {
+        this.gameLogic.addTime(5);
         this.playSound('combo');
       }
 
@@ -233,9 +238,10 @@ class SushiTypingGame {
     const wpm = elapsedTime > 0 ? Math.round((state.totalTyped / 5) / elapsedTime) : 0;
     document.getElementById('wpm-display').textContent = wpm;
 
-    // 連続ミスなしバー
-    const maxConsecutive = 300; // バーの最大値
-    const percentage = Math.min((state.consecutiveCorrect / maxConsecutive) * 100, 100);
+    // 連続ミスなしバー（50文字で満タン、繰り返し）
+    const maxConsecutive = 50; // バーの最大値
+    const consecutiveForGauge = state.consecutiveCorrect % maxConsecutive; // 50文字ごとにリセット表示
+    const percentage = (consecutiveForGauge / maxConsecutive) * 100;
     const consecutiveBar = document.getElementById('consecutive-bar');
     consecutiveBar.style.width = percentage + '%';
 
@@ -245,7 +251,12 @@ class SushiTypingGame {
       consecutiveBar.classList.remove('active');
     }
 
-    document.getElementById('consecutive-count').textContent = state.consecutiveCorrect + '文字';
+    // ゲージ回数を表示（50文字達成した回数）
+    const gaugeCount = Math.floor(state.consecutiveCorrect / maxConsecutive);
+    const countText = gaugeCount > 0
+      ? `${consecutiveForGauge}文字 (×${gaugeCount})`
+      : `${consecutiveForGauge}文字`;
+    document.getElementById('consecutive-count').textContent = countText;
   }
 
   /**
@@ -287,22 +298,6 @@ class SushiTypingGame {
     setTimeout(() => {
       typingArea.classList.remove(type);
     }, 300);
-  }
-
-  /**
-   * ボーナス表示
-   */
-  showBonus(bonus) {
-    const notification = document.getElementById('bonus-notification');
-    notification.textContent = `🎉 BONUS +${bonus}pt! 🎉`;
-    notification.style.display = 'block';
-    notification.classList.remove('bonus-show');
-    void notification.offsetWidth; // リフロー
-    notification.classList.add('bonus-show');
-
-    setTimeout(() => {
-      notification.style.display = 'none';
-    }, 2000);
   }
 
   /**
