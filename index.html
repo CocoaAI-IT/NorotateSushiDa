@@ -3,181 +3,467 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>回らない寿司打 - Typing Game</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>回らない寿司打 - Premium Typing Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Shippori+Mincho:wght@500;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="css/animations.css">
+
+  <style>
+    /* =========================================
+       Base & Aesthetic-Usability Effect
+       高級和風モダンなデザインシステム
+       ========================================= */
+    :root {
+      --color-bg: #1a1510;
+      --color-primary: #d4af37; /* Gold */
+      --color-accent: #c0392b; /* Red */
+      --color-text: #f0f0f0;
+      --color-wood: #3e2723;
+      --glass-surface: rgba(20, 20, 20, 0.7);
+      --glass-border: 1px solid rgba(212, 175, 55, 0.3);
+      --shadow-elevation: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background-color: var(--color-bg);
+      /* 和紙のような微細なノイズテクスチャ */
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      color: var(--color-text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* 労働の錯覚（Labor Illusion）ローディング */
+    #loading-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease;
+    }
+    .loader-text {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.5em;
+      margin-bottom: 20px;
+      color: var(--color-primary);
+      animation: pulse 2s infinite;
+    }
+    .loader-bar-bg {
+      width: 200px; height: 2px; background: #333;
+    }
+    .loader-bar-fill {
+      height: 100%; background: var(--color-primary); width: 0%; transition: width 0.2s;
+    }
+
+    /* 画面共通設定 */
+    #app { width: 100vw; height: 100vh; position: relative; }
+    .screen {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      display: none; opacity: 0; transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .screen.active { display: flex; opacity: 1; }
+
+    /* =========================================
+       Start Screen (Visual Hierarchy & Anchoring)
+       ========================================= */
+    #start-screen {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #2c2018 0%, #000000 100%);
+    }
+
+    .game-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--color-primary);
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+      margin-bottom: 1rem;
+      letter-spacing: 0.2em;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #aaa;
+      letter-spacing: 0.5em;
+      margin-bottom: 4rem;
+      border-top: 1px solid var(--color-primary);
+      border-bottom: 1px solid var(--color-primary);
+      padding: 10px 40px;
+    }
+
+    .course-selection {
+      display: flex; gap: 30px; perspective: 1000px;
+    }
+
+    /* コースボタン：カード型デザイン（親近性バイアス - メニュー表のような見た目） */
+    .course-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 40px 30px;
+      cursor: pointer;
+      width: 240px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    
+    /* ホバー時のマイクロインタラクション（User Delight） */
+    .course-btn:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: var(--color-primary);
+      background: rgba(212, 175, 55, 0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    /* お勧めコース（アンカー効果 - 真ん中を強調） */
+    .course-btn[data-course="normal"] {
+      border-color: var(--color-primary);
+      transform: scale(1.1);
+      z-index: 2;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+    .course-btn[data-course="normal"]:hover {
+      transform: scale(1.15) translateY(-5px);
+    }
+    .course-btn[data-course="normal"]::before {
+      content: '店主おすすめ';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      background: var(--color-primary); color: #000;
+      font-size: 0.8rem; padding: 4px 12px; font-weight: bold;
+    }
+
+    .course-name { font-size: 1.8rem; margin-bottom: 15px; font-family: 'Shippori Mincho', serif; }
+    .course-price { font-size: 1.4rem; color: var(--color-primary); font-weight: bold; }
+    .course-time { color: #888; font-size: 0.9rem; margin-top: 10px; }
+
+    /* =========================================
+       Game Screen (Focus & Tunnel Effect)
+       ========================================= */
+    #game-screen {
+      background: radial-gradient(circle at center, #3e2723 0%, #000000 90%);
+    }
+
+    /* 背景のSVG等を暗くして主役（寿司）を目立たせる */
+    .background-container, .chef-container {
+      filter: brightness(0.4) sepia(0.3);
+      transition: filter 0.5s;
+    }
+
+    /* HUD: グラスモーフィズム */
+    .game-info-bar {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 40px;
+      background: var(--glass-surface);
+      border: var(--glass-border);
+      padding: 15px 40px;
+      border-radius: 50px;
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .info-item { text-align: center; }
+    .info-label { font-size: 0.8rem; color: #aaa; letter-spacing: 0.1em; display: block; }
+    .info-value { font-size: 1.8rem; font-weight: 700; color: #fff; font-family: 'Helvetica Neue', sans-serif; }
+    #time-display.time-warning { color: var(--color-accent); animation: pulse 0.5s infinite; }
+
+    /* 寿司エリア */
+    .sushi-area {
+      position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    .sushi-image {
+      width: 280px; 
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
+      transition: transform 0.1s;
+    }
+    .plate-image { width: 320px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+
+    /* タイピングエリア (Visual Anchor) */
+    .typing-area {
+      position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+      width: 80%; max-width: 800px;
+      background: rgba(0, 0, 0, 0.8);
+      border-top: 2px solid var(--color-primary);
+      padding: 30px;
+      text-align: center;
+      z-index: 20;
+      box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px);
+    }
+
+    .phrase-display {
+      font-size: 2.2rem; margin-bottom: 10px; font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .romaji-display {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .romaji-typed { color: #555; } /* 入力済みは目立たなく（未入力に集中させる） */
+    .romaji-remaining { color: var(--color-primary); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
+
+    /* 連続バー (Goal Gradient Effect) */
+    .consecutive-bar-container {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      height: 6px; background: #333;
+    }
+    #consecutive-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--color-primary), #fff);
+      box-shadow: 0 0 20px var(--color-primary);
+      transition: width 0.2s;
+    }
+    
+    /* 結果画面 (Peak-End Rule) */
+    #result-screen {
+      background: rgba(0,0,0,0.9);
+      justify-content: center; align-items: center;
+      z-index: 200;
+    }
+    .result-container {
+      background: #1a1a1a;
+      border: 1px solid var(--color-primary);
+      padding: 60px;
+      text-align: center;
+      box-shadow: 0 0 100px rgba(212, 175, 55, 0.2);
+      max-width: 600px; width: 90%;
+    }
+    .result-title { font-size: 3rem; color: var(--color-primary); margin-bottom: 30px; }
+    
+    .result-btn {
+      background: transparent;
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      margin-top: 30px;
+      cursor: pointer;
+      font-family: 'Shippori Mincho', serif;
+      transition: 0.3s;
+    }
+    .result-btn:hover {
+      background: var(--color-primary);
+      color: #000;
+    }
+
+    /* フィードバックエフェクト */
+    .ripple-effect {
+      position: absolute; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+  </style>
 </head>
 <body>
+
+  <div id="loading-overlay">
+    <div class="loader-text">板場準備中</div>
+    <div class="loader-bar-bg"><div class="loader-bar-fill" id="loader-bar"></div></div>
+  </div>
+
   <div id="app">
-    <!-- スタート画面 -->
     <div id="start-screen" class="screen active">
       <div class="title-container">
-        <h1 class="game-title">🍣 回らない寿司打 🍣</h1>
-        <p class="subtitle">高級寿司店でタイピング修行</p>
+        <h1 class="game-title">高級寿司打</h1>
+        <p class="subtitle">至高のタイピング体験</p>
       </div>
 
       <div class="course-selection">
-        <button class="course-btn" data-course="easy">
-          <div class="course-name">お手軽コース</div>
+        <div class="course-btn" data-course="easy">
+          <div class="course-name">梅</div>
           <div class="course-price">3,000円</div>
           <div class="course-time">60秒</div>
-        </button>
+        </div>
 
-        <button class="course-btn" data-course="normal">
-          <div class="course-name">お勧めコース</div>
+        <div class="course-btn" data-course="normal">
+          <div class="course-name">竹</div>
           <div class="course-price">5,000円</div>
           <div class="course-time">90秒</div>
-        </button>
+        </div>
 
-        <button class="course-btn" data-course="hard">
-          <div class="course-name">高級コース</div>
+        <div class="course-btn" data-course="hard">
+          <div class="course-name">松</div>
           <div class="course-price">10,000円</div>
           <div class="course-time">120秒</div>
-        </button>
-      </div>
-
-      <div class="instructions">
-        <h3>遊び方</h3>
-        <ul>
-          <li>表示された文章をローマ字でタイピングしてください</li>
-          <li>ミスなく連続で打つとボーナスポイントがもらえます</li>
-          <li>時間内にできるだけ多くタイプしてお得を目指しましょう</li>
-        </ul>
+        </div>
       </div>
     </div>
 
-    <!-- ゲーム画面 -->
     <div id="game-screen" class="screen">
-      <!-- 背景（カウンター席） -->
       <div class="background-container">
-        <img src="images/counter.svg" alt="カウンター" class="background-image">
+        <img src="images/counter.svg" alt="カウンター" class="background-image" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+      <div class="chef-container" style="position:absolute; bottom:0; left:10%;">
+        <img src="images/chef.svg" alt="板前さん" class="chef-image" style="height: 40vh;">
       </div>
 
-      <!-- 板前さん -->
-      <div class="chef-container">
-        <img src="images/chef.svg" alt="板前さん" class="chef-image">
-      </div>
-
-      <!-- ゲーム情報バー -->
       <div class="game-info-bar">
         <div class="info-item">
-          <span class="info-label">⏱ 残り:</span>
-          <span id="time-display" class="info-value">0.0秒</span>
+          <span class="info-label">残り時間</span>
+          <span id="time-display" class="info-value">0.0</span>
         </div>
         <div class="info-item">
-          <span class="info-label">💰 コース:</span>
-          <span id="course-price-display" class="info-value">0円</span>
-        </div>
-        <div class="info-item">
-          <span class="info-label">📊 獲得:</span>
-          <span id="score-display" class="info-value">0円</span>
+          <span class="info-label">お会計</span>
+          <span id="score-display" class="info-value">0</span>
         </div>
       </div>
 
-      <!-- 連続ミスなしバー -->
-      <div class="consecutive-bar-container">
-        <div class="consecutive-label">🔥 連続ミスなし:</div>
-        <div class="consecutive-bar-wrapper">
-          <div id="consecutive-bar" class="consecutive-bar"></div>
-        </div>
-        <div id="consecutive-count" class="consecutive-count">0文字</div>
-      </div>
-
-      <!-- 寿司表示エリア -->
       <div class="sushi-area">
-        <div class="sushi-container">
-          <img id="sushi-image" src="images/sushi-maguro.svg" alt="寿司" class="sushi-image">
+        <div class="sushi-container" style="position: relative; display: flex; justify-content: center; align-items: center;">
           <img src="images/plate.svg" alt="お皿" class="plate-image">
+          <img id="sushi-image" src="images/sushi-maguro.svg" alt="寿司" class="sushi-image" style="position: absolute; top: -20px;">
         </div>
       </div>
 
-      <!-- タイピングエリア -->
       <div class="typing-area">
-        <div id="phrase-display" class="phrase-display">文章がここに表示されます</div>
+        <div id="phrase-display" class="phrase-display">いらっしゃいませ</div>
         <div id="romaji-display" class="romaji-display">
-          <span id="romaji-typed" class="romaji-typed"></span><span id="romaji-remaining" class="romaji-remaining">romaji</span>
+          <span id="romaji-typed" class="romaji-typed"></span><span id="romaji-remaining" class="romaji-remaining">PRESS START</span>
         </div>
       </div>
-
-      <!-- ステータス表示 -->
-      <div class="status-bar">
-        <div class="status-item">
-          <span class="status-label">タイプ数:</span>
-          <span id="typed-count">0</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label">ミス:</span>
-          <span id="miss-count">0</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label">WPM:</span>
-          <span id="wpm-display">0</span>
-        </div>
+      
+      <div class="consecutive-bar-container">
+        <div id="consecutive-bar"></div>
       </div>
 
-      <!-- ボーナス通知 -->
-      <div id="bonus-notification" class="bonus-notification"></div>
+      <div style="display:none;">
+        <span id="course-price-display"></span>
+        <span id="typed-count"></span>
+        <span id="miss-count"></span>
+        <span id="wpm-display"></span>
+        <span id="consecutive-count"></span>
+      </div>
     </div>
 
-    <!-- リザルト画面 -->
     <div id="result-screen" class="screen">
       <div class="result-container">
-        <h2 class="result-title">お会計</h2>
-
+        <h2 class="result-title">御会計</h2>
+        
         <div class="result-main">
-          <div class="result-row">
-            <span class="result-label">お支払い:</span>
-            <span id="result-price" class="result-value">0円</span>
+          <div class="result-row" style="margin-bottom: 20px;">
+            <span class="result-label">成果</span>
+            <span id="result-profit" class="result-value profit-value" style="font-size: 2rem; color: #d4af37;">0円</span>
           </div>
-          <div class="result-row">
-            <span class="result-label">獲得ポイント:</span>
-            <span id="result-earned" class="result-value">0円</span>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; border-top: 1px solid #333; padding-top: 20px;">
+            <div>正確率: <span id="result-accuracy" style="color:#fff;"></span></div>
+            <div>速度: <span id="result-wpm" style="color:#fff;"></span></div>
+            <div>ミス: <span id="result-miss" style="color:#fff;"></span></div>
+            <div>最大連打: <span id="result-consecutive" style="color:#fff;"></span></div>
           </div>
-          <hr class="result-divider">
-          <div class="result-row profit">
-            <span class="result-label">お得:</span>
-            <span id="result-profit" class="result-value profit-value">0円</span>
-          </div>
-        </div>
-
-        <div class="result-stats">
-          <div class="stat-item">
-            <div class="stat-label">タイプ数</div>
-            <div id="result-typed" class="stat-value">0文字</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">ミス</div>
-            <div id="result-miss" class="stat-value">0回</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">正確率</div>
-            <div id="result-accuracy" class="stat-value">0%</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">最大連続</div>
-            <div id="result-consecutive" class="stat-value">0文字</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">WPM</div>
-            <div id="result-wpm" class="stat-value">0</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">ボーナス</div>
-            <div id="result-bonus" class="stat-value">0pt</div>
-          </div>
+           <span id="result-price" style="display:none"></span>
+           <span id="result-earned" style="display:none"></span>
+           <span id="result-typed" style="display:none"></span>
+           <span id="result-bonus" style="display:none"></span>
         </div>
 
         <div class="result-buttons">
-          <button id="retry-btn" class="result-btn">もう一度</button>
-          <button id="back-to-menu-btn" class="result-btn">コース選択</button>
+          <button id="retry-btn" class="result-btn">もう一皿</button>
+          <button id="back-to-menu-btn" class="result-btn">お帰り</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="js/typing-engine.js"></script>
   <script src="js/game-logic.js"></script>
   <script src="js/main.js"></script>
+  
+  <script>
+    // ===============================================
+    // UI Enhancement Script (Psychology Add-ons)
+    // ===============================================
+
+    // 1. Labor Illusion: Loading Sequence
+    document.addEventListener('DOMContentLoaded', () => {
+      const loader = document.getElementById('loading-overlay');
+      const bar = document.getElementById('loader-bar');
+      const texts = ["ネタを仕入れ中...", "シャリを準備中...", "包丁を研いでいます...", "開店準備完了"];
+      const textEl = document.querySelector('.loader-text');
+      
+      let width = 0;
+      let textIdx = 0;
+      
+      const interval = setInterval(() => {
+        width += Math.random() * 5;
+        if(width > 100) width = 100;
+        bar.style.width = width + '%';
+        
+        // テキストを進行度に合わせて変更
+        if(width > 25 && textIdx === 0) { textEl.innerText = texts[1]; textIdx++; }
+        if(width > 50 && textIdx === 1) { textEl.innerText = texts[2]; textIdx++; }
+        if(width > 90 && textIdx === 2) { textEl.innerText = texts[3]; textIdx++; }
+        
+        if(width === 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loader.style.opacity = 0;
+            setTimeout(() => loader.style.display = 'none', 800);
+          }, 500);
+        }
+      }, 50);
+    });
+
+    // 2. Variable Reward: Ripple Effect on click/type
+    document.addEventListener('keydown', (e) => {
+      // 画面中央付近にランダムな波紋を出す
+      const x = window.innerWidth / 2 + (Math.random() - 0.5) * 400;
+      const y = window.innerHeight - 200 + (Math.random() - 0.5) * 100;
+      
+      createRipple(x, y);
+    });
+
+    function createRipple(x, y) {
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple-effect');
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.style.width = '20px';
+      ripple.style.height = '20px';
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+    
+    // 3. Peak-End Rule: Override ShowScreen to add transitions
+    const originalShowScreen = SushiTypingGame.prototype.showScreen;
+    SushiTypingGame.prototype.showScreen = function(screenId) {
+       // 元の処理呼び出し（DOM操作）
+       document.querySelectorAll('.screen').forEach(screen => {
+         screen.classList.remove('active');
+         screen.style.opacity = 0;
+       });
+       
+       const target = document.getElementById(screenId);
+       target.classList.add('active');
+       // Fade In
+       setTimeout(() => target.style.opacity = 1, 50);
+    };
+
+    // 4. Update UI Override for Juicy Bars
+    // GameLogicからの更新に合わせて、CSSバーなどを滑らかに動かす処理は
+    // CSSのtransitionで自動補完されるため、特別なJS追加は不要だが、
+    // コンボ演出などをフックするならここ。
+  </script>
 </body>
 </html>
